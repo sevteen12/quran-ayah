@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reward Mood</title>
+  <link rel="stylesheet" href="css/mood.css">
+  <style>
+    /* Add custom styles directly for quick fixes */
+    .image-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%; /* Make the container width 100% */
+      max-width: 600px; /* Limit maximum width to 600px */
+      height: auto; /* Adjust height automatically */
+      aspect-ratio: 3 / 2; /* Maintain aspect ratio of 600x400 */
+      margin: 0 auto; /* Center the container horizontally */
+      overflow: hidden; /* Hide overflow for a clean look */
+      border-radius: 8px; /* Optional rounded corners */
+    }
+
+    .image-section img {
+      width: 100%; /* Ensure the image fits the container width */
+      height: 100%; /* Ensure the image fills the container height */
+      object-fit: cover; /* Maintain aspect ratio and fill container */
+    }
+
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 768px) {
+      .image-section {
+        width: 90%; /* Reduce container width for mobile */
+        max-width: none; /* Remove maximum width restriction */
+        height: auto; /* Adjust height automatically */
+      }
+    }
+
+    .mood-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px; /* Add spacing between elements */
+      padding: 20px; /* Add padding around the content */
+    }
+
+    .verse-section {
+      text-align: center; /* Center align the verse and translation */
+    }
+
+    .bottom-bar {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Home Button -->
+  <div class="home-button-container">
+    <a href="index.html" class="home-button">Home</a>
+  </div>
+  <div id="loadingCircle">Loading...</div> <!-- Loader -->
+
+  <div class="mood-container">
+    <!-- Image Section -->
+    <div class="image-section">
+      <img id="nature-image" src="https://via.placeholder.com/600x400" alt="Nature Image">
+    </div>
+
+    <!-- Verse Section -->
+    <div class="verse-section">
+      <div id="verse" class="verse">Click the button to generate a verse...</div>
+      <div id="translation" class="translation"></div>
+      <div id="ayah-number" class="ayah-number"></div>
+      <button class="generate-button" onclick="generateRandomContent()">Generate Random Ayah</button>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="bottom-bar">
+      <h3 class="bottom-bar-title">Select Other Moods</h3>
+      <div class="bottom-bar-buttons">
+        <button class="bottom-button" onclick="window.location.href='sad.html'">Sad</button>
+        <button class="bottom-button" onclick="window.location.href='angry.html'">Angry</button>
+        <button class="bottom-button" onclick="window.location.href='lowiman.html'">Low Iman</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/random.js" defer></script>
+</body>
+</html>

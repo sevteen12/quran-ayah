@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qibla Compass</title>
+  <link rel="stylesheet" href="css/qibla.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+</head>
+<body>
+  <div class="compass-container">
+    <div class="compass" id="compass">
+      <img src="images/3165298.png" alt="Compass" class="compass-image">
+      <img src="images/3165298.png" alt="Qibla Needle" class="qibla-needle" id="qibla-needle">
+    </div>
+    <div class="qibla-info">
+      <h2>Qibla Compass</h2>
+      <p>Heading: <span id="heading">0</span>°</p>
+      <p>Qibla Direction: <span id="qibla-direction">0</span>°</p>
+    </div>
+  </div>
+  <script src="js/qibla.js" defer></script>
+</body>
+</html>

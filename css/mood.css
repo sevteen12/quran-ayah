@@ -1,0 +1,219 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: 'Consolas', sans-serif;
+  background: radial-gradient(circle at 30% 50%, #4e342e, #6d4c41 40%, #8d6e63 70%, #3e2723 100%);
+  background-size: cover;
+  color: #fff;
+  text-transform: uppercase;
+  overflow-x: hidden;
+}
+
+/* Mood Container */
+.mood-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* Image Section */
+.image-section img {
+  border-radius: 15px;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.image-section img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Verse Section */
+.verse-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.verse {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.translation {
+  font-size: 1.2em;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.ayah-number {
+  font-size: 1em;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+button, .bottom-button {
+  font-family: 'Consolas', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 5px 5px;
+  border: none;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  text-align: center;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Marker Highlight Effect */
+button::before, .bottom-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0; /* Initially, no highlight is visible */
+  height: 100%; /* Full height of the button */
+  background: #ff0000; /* Highlight color */
+  z-index: -1; /* Place the highlight behind the text */
+  transition: width 0.4s ease-in-out; /* Smooth width expansion */
+}
+
+button:hover::before, .bottom-button:hover::before {
+  width: 100%; /* Fully covers the button on hover */
+}
+
+button:hover, .bottom-button:hover {
+  color: #fff; /* Ensure text remains visible */
+}
+
+/* Bottom Bar for Desktop */
+.bottom-bar {
+  position: fixed; /* Sticks to the bottom of the screen */
+  bottom: 0;
+  width: 100%;
+  padding: 5px 5px; /* Padding for vertical spacing */
+ 
+  display: flex;
+  flex-direction: column; /* Default to column layout */
+  align-items: center; /* Center content horizontally */
+  text-align: center; /* Center text */
+  gap: 10px; /* Space between title and buttons */
+  z-index: 1000; /* Ensure it stays above other elements */
+}
+
+.bottom-bar-title {
+  position: relative; /* Position relative to anchor the ::before element */
+  font-size: 18px; /* Larger font for visibility */
+  font-weight: bold;
+  color: #ffffff; /* Text color */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Add shadow for better visibility */
+}
+
+/* Brush Stroke Effect */
+.bottom-bar-title::before {
+  content: '';
+  position: absolute;
+  bottom: 0; /* Align the stroke with the bottom of the text */
+  left: 50%; /* Center it horizontally */
+  transform: translateX(-50%); /* Center alignment */
+  width: 120%; /* Slightly larger than the text */
+  height: 8px; /* Height of the brush stroke */
+  background: rgba(77, 255, 0, 0.5); /* Brush stroke color with transparency */
+  border-radius: 4px; /* Smooth the edges for a brush effect */
+  z-index: -1; /* Place behind the text */
+}
+
+/* Buttons Container */
+.bottom-bar-buttons {
+  display: flex; /* Arrange buttons in a row */
+  justify-content: center; /* Center buttons horizontally */
+  gap: 15px; /* Space between buttons */
+  flex-wrap: nowrap; /* Prevent buttons from wrapping */
+}
+
+/* Bottom Bar Buttons */
+.bottom-button {
+  font-size: 14px;
+  padding: 5px 5px;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+  .bottom-bar {
+    position: relative; /* Allows bar to scroll with content */
+    padding: 15px 0; /* Adjust padding for better fit */
+  }
+
+  .bottom-bar-buttons {
+    flex-wrap: nowrap; /* Prevent buttons from wrapping */
+    justify-content: center; /* Center buttons */
+    gap: 10px; /* Space between buttons */
+  }
+
+  .bottom-button {
+    font-size: 12px; /* Slightly smaller font for compactness */
+    padding: 8px 10px; /* Smaller padding for mobile */
+  }
+}
+/* Home Button Container */
+.home-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0px; /* Space between the button and the image */
+  padding: 25px 1px;
+}
+
+/* Home Button */
+.home-button {
+  font-family: 'Consolas', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 5px ;
+  border: none;
+  background: none;
+  color: #ffffff; /* Text color */
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  text-align: center;
+  transition: color 0.3s ease-in-out;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Background shadow for better visibility */
+}
+
+
+
+/* Marker Highlight Effect */
+.home-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0; /* Initially, no highlight is visible */
+  height: 100%; /* Full height of the button */
+  background: #ff0000; /* Highlight color */
+  z-index: -1; /* Place the highlight behind the text */
+  transition: width 0.4s ease-in-out; /* Smooth width expansion */
+}
+
+.home-button:hover::before {
+  width: 100%; /* Fully covers the button on hover */
+}
+
+.home-button:hover {
+  color: #fff; /* Ensure text remains visible */
+}
+
+
