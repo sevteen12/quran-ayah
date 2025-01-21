@@ -1,76 +1,77 @@
-const KAABA_LAT = 21.422487; // Kaaba latitude
-const KAABA_LONG = 39.826206; // Kaaba longitude
-let currentHeading = 0;
-
 // Initialize compass and needle
-const compassElement = document.getElementById("compass");
-const needleElement = document.getElementById("qibla-needle");
-const headingElement = document.getElementById("heading");
-const qiblaDirectionElement = document.getElementById("qibla-direction");
+const info = document.getElementById("info");
+const compassImage = document.getElementById("compass-image");
+const permissionsButton = document.getElementById("permissions");
+let qiblaBearing = 0;
 
 // Calculate Qibla direction
-function calculateQiblaDirection(userLat, userLong, heading) {
-  const userLocation = { latitude: userLat, longitude: userLong };
-  const destinationLocation = { latitude: KAABA_LAT, longitude: KAABA_LONG };
-
-  const lat1 = degreesToRadians(userLocation.latitude);
-  const lat2 = degreesToRadians(destinationLocation.latitude);
-  const deltaLong = degreesToRadians(destinationLocation.longitude - userLocation.longitude);
-
-  const y = Math.sin(deltaLong) * Math.cos(lat2);
-  const x = Math.cos(lat1) * Math.sin(lat2) -
-            Math.sin(lat1) * Math.cos(lat2) * Math.cos(deltaLong);
-
-  let bearing = radiansToDegrees(Math.atan2(y, x));
-  bearing = (bearing + 360) % 360; // Normalize to 0-360
-
-  const qiblaDirection = (bearing - heading + 360) % 360;
-  return qiblaDirection;
+function calculateQiblaBearing(
+  userLat,
+  userLon,
+  kaabaLat = 21.4225,
+  kaabaLon = 39.8262
+) {
+  const rad = Math.PI / 180;
+  const dLon = (kaabaLon - userLon) * rad;
+  const lat1 = userLat * rad;
+  const lat2 = kaabaLat * rad;
+  const y = Math.sin(dLon) * Math.cos(lat2);
+  const x =
+    Math.cos(lat1) * Math.sin(lat2) -
+    Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+  let bearing = Math.atan2(y, x) / rad;
+  bearing = (bearing + 360) % 360;
+  return bearing;
 }
 
-// Convert degrees to radians
-function degreesToRadians(degrees) {
-  return degrees * (Math.PI / 180);
+// Request permissions and initialize orientation handling
+permissionsButton.addEventListener("click", async () => {
+  try {
+    if (typeof DeviceOrientationEvent.requestPermission === "function") {
+      const permission = await DeviceOrientationEvent.requestPermission();
+      if (permission === "granted") {
+        enableCompass();
+      } else {
+        info.innerHTML += "<p>Permission denied for compass access.</p>";
+      }
+    } else {
+      enableCompass();
+    }
+  } catch (error) {
+    info.innerHTML += `<p>Error requesting permissions: ${error.message}</p>`;
+  }
+});
+
+function enableCompass() {
+  permissionsButton.style.display = "none";
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const userLat = position.coords.latitude;
+        const userLon = position.coords.longitude;
+        qiblaBearing = calculateQiblaBearing(userLat, userLon);
+        info.innerHTML = `
+                  <h2 id="main-head">Qibla Compass</h2>
+                  <p class="para">Heading: <span id="current-heading" >0.0</span>°</p>
+                  <p class="para">Qibla Direction: <span id="qibla-direction" >${qiblaBearing.toFixed(
+                    2
+                  )}</span>°</p>
+              `;
+
+        window.addEventListener("deviceorientation", handleOrientation);
+      },
+      (error) => {
+        info.innerHTML = `<p>Error fetching location: ${error.message}</p>`;
+      }
+    );
+  }
 }
 
-// Convert radians to degrees
-function radiansToDegrees(radians) {
-  return radians * (180 / Math.PI);
-}
+function handleOrientation(event) {
+  let compass = event.webkitCompassHeading || Math.abs(event.alpha - 360);
+  compassImage.style.transform = `rotate(${qiblaBearing - compass}deg)`;
 
-// Update compass and Qibla needle
-function updateCompass(event) {
-  const heading = Math.round(event.alpha);
-  currentHeading = heading;
-
-  // Get user location
-  navigator.geolocation.getCurrentPosition((position) => {
-    const userLat = position.coords.latitude;
-    const userLong = position.coords.longitude;
-
-    const qiblaDirection = calculateQiblaDirection(userLat, userLong, heading);
-
-    headingElement.textContent = heading;
-    qiblaDirectionElement.textContent = qiblaDirection.toFixed(2);
-
-    // Animate compass and needle
-    gsap.to(compassElement, {
-      rotation: -heading,
-      duration: 1,
-      ease: "power2.out",
-    });
-
-    gsap.to(needleElement, {
-      rotation: qiblaDirection,
-      duration: 1,
-      ease: "power2.out",
-    });
-  });
-}
-
-// Listen for device orientation events
-if (window.DeviceOrientationEvent) {
-  window.addEventListener("deviceorientation", updateCompass);
-} else {
-  alert("Your browser does not support device orientation.");
+  const currentHeading = compass.toFixed(1);
+  document.getElementById("current-heading").textContent = currentHeading;
 }
