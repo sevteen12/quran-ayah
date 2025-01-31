@@ -4,7 +4,7 @@ let currentHeading = 0;
 
 // Initialize compass and needle
 const compassElement = document.getElementById("compass");
-const needleElement = document.getElementById("qibla-needle");
+// const needleElement = document.getElementById("qibla-needle");
 const headingElement = document.getElementById("heading");
 const qiblaDirectionElement = document.getElementById("qibla-direction");
 
@@ -60,11 +60,11 @@ function updateCompass(event) {
       ease: "power2.out",
     });
 
-    gsap.to(needleElement, {
-      rotation: qiblaDirection,
-      duration: 1,
-      ease: "power2.out",
-    });
+    // gsap.to(needleElement, {
+    //   rotation: qiblaDirection,
+    //   duration: 1,
+    //   ease: "power2.out",
+    // });
   });
 }
 

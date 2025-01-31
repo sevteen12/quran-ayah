@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div
+      id="compass"
+      style="
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        border: 2px solid #000;
+        position: relative;
+      "
+    >
+      <div id="compass-face" style="z-index: 5">
+        <div class="marker north">N</div>
+        <div class="marker south">S</div>
+        <div class="marker east">E</div>
+        <div class="marker west">W</div>
+      </div>
+      <div
+        id="needle"
+        style="
+          width: 2px;
+          height: 100px;
+          background-color: red;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform-origin: 50% 100%;
+          z-index: -1;
+        "
+      ></div>
+      <div id="center-point"></div>
+    </div>
+    <div id="info">
+      <p>Fetching location...</p>
+    </div>
+    <button id="permissions">Enable Compass</button>
+    <script src="qibla.js"></script>
+  </body>
+</html>
